@@ -1,12 +1,12 @@
 # GDB baby step 1
 ## Description
-Can you figure out what is in the `eax` register at the end of the `main` function? Put your answer in the picoCTF flag format: `picoCTF{n}` where n is the contents of the eax register in the decimal number base. If the answer was `0x11` your flag would be `picoCTF{17}`.
+> Can you figure out what is in the `eax` register at the end of the `main` function? Put your answer in the picoCTF flag format: `picoCTF{n}` where n is the contents of the eax register in the decimal number base. If the answer was `0x11` your flag would be `picoCTF{17}`.
 Disassemble _this_.
-
-HINTS:   
-
-1. gdb is a very good debugger to use for this problem and many others!
-2. `main` is actually a recognized symbol that can be used with gdb commands.
+> 
+> HINTS:   
+> 
+> 1. gdb is a very good debugger to use for this problem and many others!
+> 2. `main` is actually a recognized symbol that can be used with gdb commands.
 
 ## Solution
 - I started by learning that `eax`, is a `CPU register`, which usually stores the `return value`, for a code in say `C`.
@@ -53,4 +53,17 @@ End of assembler dump.
 ## Flag 
 ```picoCTF{549698}```
 
-INCOMPLETE RN
+## Concepts Learnt:
+- Learned about the `gdb`, which stands for `GNU debugger`, which allows examining what happens inside a given program while running.
+- Learned about cpu registers, and in particular `eax`.
+- Learned how one can disassemble `main function`, using `gdb`.
+
+## Incorrect tangents that I was stuck on
+- None, but took some time to figure out things about the new terminologies, and when I wanted to make the file execuateble, It wasn't initially working, then I found out by searching a little, that the terminal needs `full disk access`, to be able to use `chmod`.
+
+## Resources
+- Learned about CPU registers, through the youtube video given in resources, https://youtu.be/1d-6Hv1c39c?si=2VYRB51nZQt3UI0b.
+- Then about `gdb`, on wikipedia https://en.wikipedia.org/wiki/GNU_Debugger
+
+
+ 
