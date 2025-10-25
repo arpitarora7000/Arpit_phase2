@@ -72,6 +72,7 @@ End of assembler dump.
 > HINT: Shifts
 
 ## Solution
+- After catting out the file `chall_1.S`, in the main function, one would notice that using `cmp w0,0`, it is checked if the value of w0 is equal to 0 or not, and then there is `	bne	.L4`, which is a "Branch if Not Equal" instruction, if it is true, i.e w0!=0, the processor will jump to the instruction at the address labeled `.L4`, then the `	adrp x0, .LC0`, is used if w0=0, it jumps to `.LC0`, i.e it loads the address of a string literal `.LC0` into `x0` and calls `puts` to print that string("you win"), then branches to label `.L6`, without any condition.
 - So in the function given, the assembly instruction `sub	sp, sp, #32`, is reserving 32 bytes of space on the stack, further `w0`, is stored at the 12th place in the stackpointer, then `58`, is moved into `w0`, as it's value, by the instructions: `str w0, [sp, 12]`, and `mov w0, 58`
 - Then similarly, `w0`, is further stored in `sp+16`, then 2 is moved as the value of w0, then stored at `20`
 , then 3 is moved as the value of w0, and stored at 24.
@@ -80,11 +81,24 @@ End of assembler dump.
 - So by the latest instruction, we get 58*4=232, which now stored in the register w0 at sp+28, which temporarily stores the value.
 - Then w1 is loaded from address sp+28, which is 232, and w0 from 24 which is 3, then the instruction `sdiv	w0, w1, w0`, is used to integer divide the value in w1 by the value in w0 which gives 232/3=77, and store in w0, and then temporarily store w0 in sp+28.
 - Then w1 is loaded from the sp+28, where 77 was stored temporarily, and w0 is loaded from sp+12, which'll be the user input from the main function, when func is called.
-- Thenn by `sub	w0, w1, w0`, where w0 is subtracted from w1 and stored in w0, now as was mentioned in the main function that if w0 and 0 are equal it'll print "you win", so for finally w0 to be 0 input value should be 77.
+- Then by `sub	w0, w1, w0`, where w0 is subtracted from w1 and stored in w0, now as was mentioned in the main function that if w0 and 0 are equal it'll print "you win", so for finally w0 to be 0 input value should be 77.
 - Then by converting decimal value 77 to hexadecimal, i got `4d`, and then put it into the flag format specified.
 
 ## Flag  
 `picoCTF{0000004d}`
 
-INCOMPLETE YET
+## Concepts learnt
+1. Learnt about the different instructions in the `ARM assembly`, and their syntax, like `str`, `mov`, `sub`, `ldr`, `sdiv`, `lsl`, `add`.
+2. Learnt more about registers, learnt to figure out how do things work in the main function which are then applied to the given function.
+3. Learned about the `atoi`, function which changes ASCII value to integer.
+
+## Incorrect tangents that I was stuck on
+- It took time to figure out that how does main work, and where does it direct to print the win statement, and also in the function it was quite time taking to finaly figure out the input value required.
+
+## Resources
+- Learnt about all the instructions, how does the stack frame work, about the registers, about the atoi function etc in the resources video itself.
+
+ 
+
+
 
