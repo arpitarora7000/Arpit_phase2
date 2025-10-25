@@ -65,5 +65,26 @@ End of assembler dump.
 - Learned about CPU registers, through the youtube video given in resources, https://youtu.be/1d-6Hv1c39c?si=2VYRB51nZQt3UI0b.
 - Then about `gdb`, on wikipedia https://en.wikipedia.org/wiki/GNU_Debugger
 
+# ARMssembly 1
+## Description
+> For what argument does this program print `win` with variables `58, 2 and 3`? File: `chall_1.S` Flag format: picoCTF{XXXXXXXX} -> (hex, lowercase, no 0x, and 32 bits. ex. 5614267 would be picoCTF{0055aabb})
+> 
+> HINT: Shifts
 
- 
+## Solution
+- So in the function given, the assembly instruction `sub	sp, sp, #32`, is reserving 32 bytes of space on the stack, further `w0`, is stored at the 12th place in the stackpointer, then `58`, is moved into `w0`, as it's value, by the instructions: `str w0, [sp, 12]`, and `mov w0, 58`
+- Then similarly, `w0`, is further stored in `sp+16`, then 2 is moved as the value of w0, then stored at `20`
+, then 3 is moved as the value of w0, and stored at 24.
+- Then instruction `ldr	w0, [sp, 20]`, is used to load w0 from the address `sp+20`, where `2` was stored, and `ldr w1, [sp, 16]`, to load w1 from 16, where `58` was stored.
+- Then the next instruction `lsl w0, w1, w0` performs a logical shift left on the value in register w1 by the number of positions specified by the value in register w0, storing the result in register w0, which is equivalent of multiplying w1 by 2^(vlue of w0), and storing the answer in w0.
+- So by the latest instruction, we get 58*4=232, which now stored in the register w0 at sp+28, which temporarily stores the value.
+- Then w1 is loaded from address sp+28, which is 232, and w0 from 24 which is 3, then the instruction `sdiv	w0, w1, w0`, is used to integer divide the value in w1 by the value in w0 which gives 232/3=77, and store in w0, and then temporarily store w0 in sp+28.
+- Then w1 is loaded from the sp+28, where 77 was stored temporarily, and w0 is loaded from sp+12, which'll be the user input from the main function, when func is called.
+- Thenn by `sub	w0, w1, w0`, where w0 is subtracted from w1 and stored in w0, now as was mentioned in the main function that if w0 and 0 are equal it'll print "you win", so for finally w0 to be 0 input value should be 77.
+- Then by converting decimal value 77 to hexadecimal, i got `4d`, and then put it into the flag format specified.
+
+## Flag  
+`picoCTF{0000004d}`
+
+INCOMPLETE YET
+
